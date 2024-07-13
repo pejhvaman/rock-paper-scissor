@@ -12,21 +12,24 @@
   <body>
     <main>
       <section class="player player--0 player--wins">
-        <h2 class="name" id="name--0">Player 1</h2>
+        <img src="rock.png" class="state--0" />
+
+        <h2 class="name" id="name--0">Player</h2>
         <p class="score" id="score--0">0</p>
         <div class="current">
           <p class="current-label">Current</p>
           <p class="current-score" id="current--0">0</p>
         </div>
-        <img src="rock.png" class="state--0" />
 
-        <img
-          src="rock.png"
-          data-play="rock"
-          class="btn btn--rock btn--active"
-        />
-        <img src="paper.png" data-play="paper" class="btn btn--paper" />
-        <img src="scissor.png" data-play="scissor" class="btn btn--scissor" />
+        <div class="btns">
+          <img
+            src="rock.png"
+            data-play="rock"
+            class="btn btn--rock btn--active"
+          />
+          <img src="paper.png" data-play="paper" class="btn btn--paper" />
+          <img src="scissor.png" data-play="scissor" class="btn btn--scissor" />
+        </div>
       </section>
       <section class="player player--1">
         <h2 class="name" id="name--1">System</h2>
@@ -38,9 +41,10 @@
         <img src="scissor.png" class="state--1" />
       </section>
       <p class="reset">Reset</p>
-      <p class="state">
+      <p class="state state--hidden">
         "Start the game by picking"... <br />
         You have 3 shots.
+        <span class="timeout"></span>
       </p>
     </main>
   </body>
