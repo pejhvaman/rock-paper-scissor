@@ -1,4 +1,5 @@
 'use strict';
+
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
 const btns = document.querySelectorAll('.btn');
@@ -21,23 +22,22 @@ const gameMap = new Map([
 
 const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
-let currentScores, scores, limit, play, messageTimer;
-
 const messageTimeout = function (content) {
   const removeResult = () => stateEl.classList.add('state--hidden');
 
   stateEl.classList.remove('state--hidden');
   stateEl.innerHTML = `${content} 
-    <span class="timeout"></span>`;
+  <span class="timeout"></span>`;
   if (messageTimer) clearTimeout(messageTimer);
   messageTimer = setTimeout(removeResult, 2000);
 };
 
+let currentPlayer, currentScores, scores, limit, play, messageTimer;
 const init = function () {
   currentScores = [0, 0];
   currentScore1.textContent = 0;
   currentScore1.textContent = 0;
-  // currentPlayer = 0;
+  currentPlayer = 0;
   scores = [0, 0];
   score0.textContent = 0;
   score1.textContent = 0;
