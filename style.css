@@ -187,7 +187,7 @@ main {
   background-color: #e4b04f;
   border-radius: 12px;
   animation-name: timeoutBar;
-  animation-duration: 3s;
+  animation-duration: 2s;
   animation-timing-function: linear;
 }
 

@@ -15,7 +15,21 @@ const timeoutBar = document.querySelector('.timeout');
 
 const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
-let currentScores, scores, limit, play;
+let currentScores, scores, limit, play, messageTimer;
+
+const messageTimeout = function (content) {
+  const removeResult = () => stateEl.classList.add('state--hidden');
+
+  // window.addEventListener('load', function () {
+  stateEl.classList.remove('state--hidden');
+  stateEl.innerHTML = `${content} 
+    <span class="timeout"></span>`;
+  console.log(`${content} 
+    <span class="timeout"></span>`);
+  if (messageTimer) clearTimeout(messageTimer);
+  messageTimer = setTimeout(removeResult, 2000);
+  // });
+};
 
 const init = function () {
   currentScores = [0, 0];
@@ -35,19 +49,9 @@ const init = function () {
   player0El.classList.add('player--wins');
   btns.forEach(b => b.classList.remove('btn--active'));
   btns[0].classList.add('btn--active');
-  stateEl.classList.remove('state--hidden');
-  stateEl.innerHTML = `"Start the game by picking"... <br />
-        You have ${limit} shots.
-        <span class="timeout"></span>`;
-  const removeResult = function () {
-    stateEl.classList.add('state--hidden');
-  };
-  window.addEventListener('load', function () {
-    // timeoutBar.style.animationName = 'timeoutBar';
-    // timeoutBar.style.animationDuration = '3s';
-    // timeoutBar.style.animationTimingFunction = 'linear';
-    setTimeout(removeResult, 3000);
-  });
+
+  messageTimeout(`"Start the game by picking"... <br />
+      You have ${limit} shots.`);
 };
 
 init();
@@ -71,7 +75,7 @@ const thisPlayerWins = function (thisPlayer) {
     scores[thisPlayer];
   currentScores[thisPlayer === 0 ? 1 : 0] = 0;
   document.querySelector(`#current--${thisPlayer === 0 ? 1 : 0}`);
-  showResult(`${thisPlayer === 0 ? 'You win' : 'The system wins'}`);
+  messageTimeout(`${thisPlayer === 0 ? 'You win' : 'The system wins'}`);
 };
 
 const handlePicks = btn => {
@@ -92,14 +96,14 @@ const handlePicks = btn => {
   btn.classList.contains('btn--scissor') && handleScissor(randomPlay);
 };
 
-const showResult = function (message) {
-  stateEl.classList.remove('state--hidden');
-  stateEl.textContent = message;
-};
+// const showResult = function (message) {
+//   stateEl.classList.remove('state--hidden');
+//   stateEl.textContent = message;
+// };
 
 const handleRock = randomPlay => {
   //compare random play with player's choice
-  randomPlay === 'rock' && showResult('Pick again.');
+  randomPlay === 'rock' && messageTimeout('Pick again.');
   randomPlay === 'scissor' && thisPlayerWins(0);
   randomPlay === 'paper' && thisPlayerWins(1);
 };
@@ -107,20 +111,18 @@ const handleRock = randomPlay => {
 const handlePaper = randomPlay => {
   randomPlay === 'rock' && thisPlayerWins(0);
   randomPlay === 'scissor' && thisPlayerWins(1);
-  randomPlay === 'paper' && showResult('Pick again.');
+  randomPlay === 'paper' && messageTimeout('Pick again.');
 };
 
 const handleScissor = randomPlay => {
   randomPlay === 'rock' && thisPlayerWins(1);
-  randomPlay === 'scissor' && showResult('Pick again.');
+  randomPlay === 'scissor' && messageTimeout('Pick again.');
   randomPlay === 'paper' && thisPlayerWins(0);
 };
 
 const gameWinner = player => {
   document.querySelector(`.player--${player}`).classList.add('player--winner');
-  stateEl.textContent = `${
-    player === 0 ? 'You win' : 'The system wins'
-  } the game.`;
+  messageTimeout(`${player === 0 ? 'You win' : 'The system wins'} the game.`);
 };
 
 //handlers
@@ -161,6 +163,6 @@ player0El.addEventListener('click', function (e) {
   }
   if (play === false) {
     //reset message
-    showResult('Reset the game to play again.');
+    messageTimeout('Reset the game to play again.');
   }
 });
