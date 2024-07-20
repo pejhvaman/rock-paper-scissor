@@ -25,21 +25,22 @@ const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 const messageTimeout = function (content) {
   const removeResult = () => stateEl.classList.add('state--hidden');
 
-  window.addEventListener('load', function () {
-    stateEl.classList.remove('state--hidden');
-    stateEl.innerHTML = `${content} 
+  // window.addEventListener('load', function () {
+  stateEl.classList.remove('state--hidden');
+  stateEl.innerHTML = `${content} 
     <span class="timeout"></span>`;
-    if (messageTimer) clearTimeout(messageTimer);
-    messageTimer = setTimeout(removeResult, 2000);
-  });
+  if (messageTimer) clearTimeout(messageTimer);
+  messageTimer = setTimeout(removeResult, 2000);
+  // });
 };
 
 let currentPlayer, currentScores, scores, limit, play, messageTimer;
+
 const init = function () {
   currentScores = [0, 0];
+  currentScore0.textContent = 0;
   currentScore1.textContent = 0;
-  currentScore1.textContent = 0;
-  currentPlayer = 0;
+  currentPlayer = 0; //for 0 and 1s in code
   scores = [0, 0];
   score0.textContent = 0;
   score1.textContent = 0;
