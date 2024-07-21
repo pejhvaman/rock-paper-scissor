@@ -89,6 +89,9 @@ const thisPlayerWins = function (thisPlayer) {
   scores[thisPlayer]++;
   document.querySelector(`#current--${thisPlayer}`).textContent =
     currentScores[thisPlayer];
+  document.querySelector(
+    `#current--${thisPlayer === 0 ? 1 : 0}`
+  ).textContent = 0;
   document.querySelector(`#score--${thisPlayer}`).textContent =
     scores[thisPlayer];
   currentScores[thisPlayer === 0 ? 1 : 0] = 0;
@@ -221,7 +224,7 @@ player0El.addEventListener('click', function (e) {
 
   if (scores[currentPlayer] === limit) {
     gameWinner(currentPlayer);
-    if (currentPlayer === 0) showWinnerCheerUp();
+    if (currentPlayer === 0 && play !== false) showWinnerCheerUp();
     play = false;
   }
 });
