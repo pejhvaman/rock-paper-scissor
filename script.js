@@ -15,6 +15,16 @@ const score1 = document.querySelector('#score--1');
 const resetBtn = document.querySelector('.reset');
 const timeoutBar = document.querySelector('.timeout');
 
+let currentPlayer,
+  currentScores,
+  scores,
+  limit,
+  play,
+  messageTimer,
+  initStatesTimer,
+  removeCheerUpTimer,
+  encourageTimer;
+
 const gameMap = new Map([
   [0, 'rock'],
   [1, 'paper'],
@@ -40,10 +50,9 @@ const animeStates = function () {
     state0Btn.classList.remove('state-active');
     state1Btn.classList.remove('state-active');
   };
-  setTimeout(initStates, 1000);
+  if (initStatesTimer) clearTimeout(initStatesTimer);
+  initStatesTimer = setTimeout(initStates, 1000);
 };
-
-let currentPlayer, currentScores, scores, limit, play, messageTimer;
 
 const init = function () {
   currentScores = [0, 0];
@@ -174,7 +183,8 @@ const showCheerUp = function () {
   const removeCheerUp = function () {
     cheerUpEl.remove();
   };
-  setTimeout(removeCheerUp, 2000);
+  if (removeCheerUpTimer) clearTimeout(removeCheerUpTimer);
+  removeCheerUpTimer = setTimeout(removeCheerUp, 2000);
 };
 
 const showWinnerCheerUp = function () {
@@ -189,10 +199,11 @@ const showWinnerCheerUp = function () {
 ></lottie-player>`;
   player0El.insertAdjacentHTML('afterbegin', encourageHtml);
   const encourageEl = document.querySelector('.encourage');
-  const removeAnim = function () {
+  const removeEncourage = function () {
     encourageEl.remove();
   };
-  setTimeout(removeAnim, 2000);
+  if (encourageTimer) clearTimeout(encourageTimer);
+  encourageTimer = setTimeout(removeEncourage, 2000);
 };
 //handlers
 player0El.addEventListener('click', function (e) {
