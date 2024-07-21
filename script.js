@@ -1,5 +1,6 @@
 'use strict';
 
+const body = document.body;
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
 const btns = document.querySelectorAll('.btn');
@@ -34,6 +35,14 @@ const messageTimeout = function (content) {
   // });
 };
 
+const animeStates = function () {
+  const initStates = function () {
+    state0Btn.classList.remove('state-active');
+    state1Btn.classList.remove('state-active');
+  };
+  setTimeout(initStates, 1000);
+};
+
 let currentPlayer, currentScores, scores, limit, play, messageTimer;
 
 const init = function () {
@@ -47,7 +56,10 @@ const init = function () {
   limit = 3;
   play = true;
   state0Btn.src = 'rock.png';
+  state0Btn.classList.add('state-active');
   state1Btn.src = 'scissor.png';
+  state1Btn.classList.add('state-active');
+  animeStates();
   player1El.classList.remove('player--wins');
   playersEl.forEach(p => p.classList.remove('player--winner'));
   player0El.classList.add('player--wins');
@@ -80,36 +92,63 @@ const handlePicks = btn => {
   //set state for player
   const src = btn.getAttribute('src');
   state0Btn.src = src;
-
+  state0Btn.classList.add('state-active');
   //make random play for system
   const randomPlay = gameMap.get(randInt(0, 2));
-  // console.log('random play:', randomPlay);
   state1Btn.src = `${randomPlay}.png`;
+  state1Btn.classList.add('state-active');
   //handlePicks
   btn.classList.contains('btn--rock') && handleRock(randomPlay);
 
   btn.classList.contains('btn--paper') && handlePaper(randomPlay);
 
   btn.classList.contains('btn--scissor') && handleScissor(randomPlay);
+
+  animeStates();
 };
 
 const handleRock = randomPlay => {
   //compare random play with player's choice
   randomPlay === 'rock' && messageTimeout('Pick again.');
-  randomPlay === 'scissor' && thisPlayerWins(0);
-  randomPlay === 'paper' && thisPlayerWins(1);
+
+  if (randomPlay === 'scissor') {
+    currentPlayer = 0;
+    thisPlayerWins(currentPlayer);
+    showCheerUp();
+  }
+  if (randomPlay === 'paper') {
+    currentPlayer = 1;
+    thisPlayerWins(currentPlayer);
+  }
 };
 
 const handlePaper = randomPlay => {
-  randomPlay === 'rock' && thisPlayerWins(0);
-  randomPlay === 'scissor' && thisPlayerWins(1);
+  if (randomPlay === 'rock') {
+    currentPlayer = 0;
+    thisPlayerWins(currentPlayer);
+    showCheerUp();
+  }
+  if (randomPlay === 'scissor') {
+    currentPlayer = 1;
+    thisPlayerWins(currentPlayer);
+  }
+
   randomPlay === 'paper' && messageTimeout('Pick again.');
 };
 
 const handleScissor = randomPlay => {
-  randomPlay === 'rock' && thisPlayerWins(1);
+  if (randomPlay === 'rock') {
+    currentPlayer = 1;
+    thisPlayerWins(currentPlayer);
+  }
+
   randomPlay === 'scissor' && messageTimeout('Pick again.');
-  randomPlay === 'paper' && thisPlayerWins(0);
+
+  if (randomPlay === 'paper') {
+    currentPlayer = 0;
+    thisPlayerWins(currentPlayer);
+    showCheerUp();
+  }
 };
 
 const gameWinner = player => {
@@ -118,6 +157,43 @@ const gameWinner = player => {
     Reset to play again.`);
 };
 
+const showCheerUp = function () {
+  const cheerUpHtml = `<lottie-player
+      src="https://lottie.host/32d2a61c-de76-45b4-826e-85adf44a6c81/6Zrusgld2f.json"
+      speed="1"
+      autoplay
+      direction="1"
+      mode="normal"
+      class="cheer-up"
+    ></lottie-player>`;
+
+  body.insertAdjacentHTML('afterbegin', cheerUpHtml);
+
+  const cheerUpEl = document.querySelector('.cheer-up');
+
+  const removeCheerUp = function () {
+    cheerUpEl.remove();
+  };
+  setTimeout(removeCheerUp, 2000);
+};
+
+const showWinnerCheerUp = function () {
+  const encourageHtml = `<lottie-player
+  src="https://lottie.host/6f392f50-ad14-4c0a-9645-471d2b8937e0/lBK446XqNF.json"
+  background="transparent"
+  speed="1"
+  autoplay
+  direction="1"
+  mode="normal"
+  class="encourage"
+></lottie-player>`;
+  player0El.insertAdjacentHTML('afterbegin', encourageHtml);
+  const encourageEl = document.querySelector('.encourage');
+  const removeAnim = function () {
+    encourageEl.remove();
+  };
+  setTimeout(removeAnim, 2000);
+};
 //handlers
 player0El.addEventListener('click', function (e) {
   e.preventDefault();
@@ -131,13 +207,10 @@ player0El.addEventListener('click', function (e) {
       handlePicks(btn);
     }
   }
-  if (scores[0] === limit) {
-    gameWinner(0);
-    play = false;
-  }
 
-  if (scores[1] === limit) {
-    gameWinner(1);
+  if (scores[currentPlayer] === limit) {
+    gameWinner(currentPlayer);
+    if (currentPlayer === 0) showWinnerCheerUp();
     play = false;
   }
 });

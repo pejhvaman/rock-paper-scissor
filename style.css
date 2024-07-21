@@ -104,7 +104,7 @@ main {
 
 .current {
   position: absolute;
-  right: 2rem;
+  right: 0.5rem;
   background-color: var(--color-darkblue);
   opacity: 0.8;
   border-radius: 9px;
@@ -152,7 +152,7 @@ main {
   transition: all 0.2s;
   border-radius: 50%;
   box-shadow: -1px 1px 11px 0px #33333382;
-  transition: transform 0.2s;
+  transition: transform ease-in-out 0.2s;
 }
 
 .btn:hover {
@@ -162,18 +162,23 @@ main {
 .state--0,
 .state--1 {
   position: absolute;
-  left: 1rem;
-  width: 6rem;
-  height: 6rem;
+  left: 3rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
-  transition: all 0.8s;
+  transition: transform 1s;
   box-shadow: 2px 2px 10px -2px var(--color-darkblue);
 }
+
+.state-active {
+  transform: scale(2);
+}
+
 .state--0 {
-  top: 0.3rem;
+  top: 2rem;
 }
 .state--1 {
-  bottom: 0.3rem;
+  bottom: 2rem;
 }
 
 .btn--active {
@@ -281,3 +286,24 @@ main {
     width: 20%;
   }
 }
+
+.cheer-up {
+  width: 20rem;
+  height: 20rem;
+  position: absolute;
+  z-index: 10;
+  top: 20.5rem;
+  transition: visibility 0.3s;
+}
+
+.encourage {
+  width: 100%;
+  height: 30rem;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+}
+
+/* .hidden {
+  visibility: hidden;
+} */
