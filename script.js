@@ -8,15 +8,12 @@ const state0Btn = document.querySelector('.state--0');
 const state1Btn = document.querySelector('.state--1');
 const stateEl = document.querySelector('.state');
 const playersEl = document.querySelectorAll('.player');
-const currentScore0 = document.querySelector('#current--0');
-const currentScore1 = document.querySelector('#current--1');
 const score0 = document.querySelector('#score--0');
 const score1 = document.querySelector('#score--1');
 const resetBtn = document.querySelector('.reset');
 const timeoutBar = document.querySelector('.timeout');
 
 let currentPlayer,
-  currentScores,
   scores,
   limit,
   play,
@@ -55,19 +52,16 @@ const animeStates = function () {
 };
 
 const init = function () {
-  currentScores = [0, 0];
-  currentScore0.textContent = 0;
-  currentScore1.textContent = 0;
   currentPlayer = 0; //for 0 and 1s in code
   scores = [0, 0];
   score0.textContent = 0;
   score1.textContent = 0;
   limit = 3;
   play = true;
-  state0Btn.src = 'rock.png';
-  state0Btn.classList.add('state-active');
-  state1Btn.src = 'scissor.png';
-  state1Btn.classList.add('state-active');
+
+  state0Btn.classList.add('hidden');
+  state1Btn.classList.add('hidden');
+
   animeStates();
   player1El.classList.remove('player--wins');
   playersEl.forEach(p => p.classList.remove('player--winner'));
@@ -76,6 +70,8 @@ const init = function () {
   btns[0].classList.add('btn--active');
   messageTimeout(`"Start the game by picking"... <br />
       You have ${limit} shots.`);
+
+  resetBtn.classList.add('hidden');
 };
 
 init();
@@ -85,17 +81,11 @@ const thisPlayerWins = function (thisPlayer) {
   document
     .querySelector(`.player--${thisPlayer}`)
     .classList.add('player--wins');
-  currentScores[thisPlayer]++;
   scores[thisPlayer]++;
-  document.querySelector(`#current--${thisPlayer}`).textContent =
-    currentScores[thisPlayer];
-  document.querySelector(
-    `#current--${thisPlayer === 0 ? 1 : 0}`
-  ).textContent = 0;
+
   document.querySelector(`#score--${thisPlayer}`).textContent =
     scores[thisPlayer];
-  currentScores[thisPlayer === 0 ? 1 : 0] = 0;
-  document.querySelector(`#current--${thisPlayer === 0 ? 1 : 0}`);
+
   messageTimeout(`${thisPlayer === 0 ? 'You win' : 'The system wins'}`);
 };
 
@@ -104,11 +94,17 @@ const handlePicks = btn => {
   //set state for player
   const src = btn.getAttribute('src');
   state0Btn.src = src;
-  state0Btn.classList.add('state-active');
+  state0Btn.addEventListener('load', function () {
+    state0Btn.classList.add('state-active');
+    state0Btn.classList.remove('hidden');
+  });
   //make random play for system
   const randomPlay = gameMap.get(randInt(0, 2));
   state1Btn.src = `${randomPlay}.png`;
-  state1Btn.classList.add('state-active');
+  state1Btn.addEventListener('load', function () {
+    state1Btn.classList.add('state-active');
+    state1Btn.classList.remove('hidden');
+  });
   //handlePicks
   btn.classList.contains('btn--rock') && handleRock(randomPlay);
 
@@ -179,13 +175,14 @@ const showCheerUp = function () {
       class="cheer-up"
     ></lottie-player>`;
 
-  body.insertAdjacentHTML('afterbegin', cheerUpHtml);
+  player0El.insertAdjacentHTML('afterbegin', cheerUpHtml);
 
   const cheerUpEl = document.querySelector('.cheer-up');
 
   const removeCheerUp = function () {
     cheerUpEl.remove();
   };
+
   if (removeCheerUpTimer) clearTimeout(removeCheerUpTimer);
   removeCheerUpTimer = setTimeout(removeCheerUp, 2000);
 };
@@ -205,6 +202,7 @@ const showWinnerCheerUp = function () {
   const removeEncourage = function () {
     encourageEl.remove();
   };
+
   if (encourageTimer) clearTimeout(encourageTimer);
   encourageTimer = setTimeout(removeEncourage, 2000);
 };
@@ -218,6 +216,7 @@ player0El.addEventListener('click', function (e) {
       stateEl.classList.add('state--hidden');
 
       const btn = e.target;
+      //I can deactive btn when animations have not done yet
       handlePicks(btn);
     }
   }
@@ -226,6 +225,7 @@ player0El.addEventListener('click', function (e) {
     gameWinner(currentPlayer);
     if (currentPlayer === 0 && play !== false) showWinnerCheerUp();
     play = false;
+    resetBtn.classList.remove('hidden');
   }
 });
 

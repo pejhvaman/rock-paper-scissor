@@ -13,7 +13,9 @@
     <title>RPS 1nd Player</title>
   </head>
   <body>
-    <!-- <lottie-player
+    <main>
+      <section class="player player--0 player--wins">
+        <!-- <lottie-player
       src="https://lottie.host/32d2a61c-de76-45b4-826e-85adf44a6c81/6Zrusgld2f.json"
       speed="1"
       autoplay
@@ -21,8 +23,7 @@
       mode="normal"
       class="cheer-up"
     ></lottie-player> -->
-    <main>
-      <!-- <lottie-player
+        <!-- <lottie-player
         src="https://lottie.host/6f392f50-ad14-4c0a-9645-471d2b8937e0/lBK446XqNF.json"
         background="transparent"
         speed="1"
@@ -31,36 +32,29 @@
         mode="normal"
         class="encourage"
       ></lottie-player> -->
-      <section class="player player--0 player--wins">
-        <img src="rock.png" class="state--0" />
+        <img src="" class="state--0 hidden" />
 
         <h2 class="name" id="name--0">Player</h2>
-        <p class="score" id="score--0">0</p>
-        <div class="current">
-          <p class="current-label">Current</p>
-          <p class="current-score" id="current--0">0</p>
+        <div class="score-container">
+          <p class="score-label">Score</p>
+          <p class="score" id="score--0">0</p>
         </div>
 
         <div class="btns">
-          <img
-            src="rock.png"
-            data-play="rock"
-            class="btn btn--rock btn--active"
-          />
-          <img src="paper.png" data-play="paper" class="btn btn--paper" />
-          <img src="scissor.png" data-play="scissor" class="btn btn--scissor" />
+          <img src="rock.png" class="btn btn--rock btn--active" />
+          <img src="paper.png" class="btn btn--paper" />
+          <img src="scissor.png" class="btn btn--scissor" />
         </div>
       </section>
       <section class="player player--1">
         <h2 class="name" id="name--1">System</h2>
-        <p class="score" id="score--1">0</p>
-        <div class="current">
-          <p class="current-label">Current</p>
-          <p class="current-score" id="current--1">0</p>
+        <div class="score-container">
+          <p class="score-label">Score</p>
+          <p class="score" id="score--1">0</p>
         </div>
-        <img src="scissor.png" class="state--1" />
+        <img src="" class="state--1 hidden" />
       </section>
-      <p class="reset">Reset</p>
+      <p class="reset hidden">Reset</p>
       <p class="state state--hidden">
         "Start the game by picking"... <br />
         You have 3 shots.

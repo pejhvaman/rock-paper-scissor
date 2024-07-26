@@ -40,7 +40,7 @@ body {
 /* LAYOUT */
 main {
   position: relative;
-  height: 90vh;
+  height: 100vh;
   width: 100rem;
   background-color: var(--color-primary-lighter);
   backdrop-filter: blur(200px);
@@ -74,7 +74,7 @@ main {
 /* ELEMENTS */
 .name {
   position: relative;
-  font-size: 2rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   word-spacing: 2px;
@@ -82,54 +82,49 @@ main {
   color: var(--color-primary-darker);
 }
 
-.score {
-  font-size: 3rem;
-  font-weight: 600;
-  color: var(--color-tritary);
-}
-
 .player--wins {
   background-color: var(--color-primary);
 }
 .player--wins .name {
+  font-size: 3rem;
   font-weight: 700;
 }
 .player--wins .score {
   font-weight: 900;
 }
 
-.player--wins .current {
+.player--wins .score-container {
   opacity: 1;
 }
 
-.current {
+.score-container {
   position: absolute;
   right: 0.5rem;
   background-color: var(--color-darkblue);
-  opacity: 0.8;
-  border-radius: 9px;
+  opacity: 0.6;
+  border-radius: 6px;
   color: var(--color-secondary);
-  width: 30%;
+  width: 20%;
   padding: 0.5rem 0;
   text-align: center;
   transition: all 0.75s;
 }
 
-.player--0 .current {
+.player--0 .score-container {
   top: 0.5rem;
 }
 
-.player--1 .current {
+.player--1 .score-container {
   bottom: 0.5rem;
 }
 
-.current-label {
+.score-label {
   text-transform: uppercase;
   font-size: 1.2rem;
   color: #ddd;
 }
 
-.current-score {
+.score {
   font-size: 2rem;
 }
 
@@ -138,7 +133,7 @@ main {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;
+  width: 100%;
   margin: auto;
   display: flex;
   justify-content: space-evenly;
@@ -146,8 +141,8 @@ main {
 }
 
 .btn {
-  width: 4rem;
-  height: 4rem;
+  width: 6rem;
+  height: 6rem;
   cursor: pointer;
   transition: all 0.2s;
   border-radius: 50%;
@@ -162,7 +157,7 @@ main {
 .state--0,
 .state--1 {
   position: absolute;
-  left: 3rem;
+  left: 45%;
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -171,7 +166,7 @@ main {
 }
 
 .state-active {
-  transform: scale(2);
+  transform: scale(1.8);
 }
 
 .state--0 {
@@ -268,31 +263,17 @@ main {
 }
 
 .hidden {
-  display: none;
-}
-@media (min-width: 576px) {
-  main {
-    width: 80%;
-  }
-  .current {
-    width: 25%;
-  }
-}
-@media (min-width: 768px) {
-  main {
-    width: 60%;
-  }
-  .current {
-    width: 20%;
-  }
+  visibility: hidden;
 }
 
 .cheer-up {
-  width: 20rem;
-  height: 20rem;
+  width: 16rem;
+  height: 16rem;
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
-  top: 20.5rem;
+  top: 2rem;
   transition: visibility 0.3s;
 }
 
@@ -304,6 +285,19 @@ main {
   z-index: 10;
 }
 
-/* .hidden {
-  visibility: hidden;
-} */
+@media (min-width: 576px) {
+  main {
+    width: 80%;
+  }
+  .score-container {
+    width: 25%;
+  }
+}
+@media (min-width: 768px) {
+  main {
+    width: 60%;
+  }
+  .score-container {
+    width: 20%;
+  }
+}
